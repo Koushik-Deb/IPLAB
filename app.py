@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Flask, render_template, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
@@ -5,6 +7,7 @@ from forms import RegistrationForm, LoginForm
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '3009a067019ca7c004d7e5a0133431ac'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class User(db.Model):
@@ -13,9 +16,21 @@ class User(db.Model):
     email = db.Column(db.String(120),unique=True,nullable=False)
     password = db.Column(db.String(60),nullable=False,)
     image_file = db.Column(db.String(20),nullable=False,default='default.jpg')
+    posts = db.relationship('Post', backref='author',lazy = True)
 
     def __repr__(self):
         return f"user('{self.username}','{self.email}','{self.image_file}')"
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    content = db.Column(db.Text,nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.username'),nullable=False)
+
+    def __repr__(self):
+        return f"Post('{self.title}','{self.date_posted}')"
+
 posts = [
     {'author': "Koushik Deb",
      'title' : "Blog Post 1",
