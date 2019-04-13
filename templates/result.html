@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>DU: {{ du }}</h1>
+
+    <h1>JU:
+    {% for unit in ju %}
+        {{ unit }}
+    {% endfor %}
+    </h1>
+{% endblock %}
+
