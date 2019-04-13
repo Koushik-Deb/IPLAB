@@ -112,6 +112,8 @@ def link():
 def grades():
     return render_template('grades.html', title = 'Grades')
 
-
+@app.route('/index')
+def index():
+    return render_template('index.html')
 if __name__ == '__main__':
     app.run(debug = True)
