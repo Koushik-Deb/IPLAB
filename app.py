@@ -76,7 +76,7 @@ def register():
         password = form.password.data
         auth.create_user_with_email_and_password(email, password)
         #auth.get_account_info(['idToken'])
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
     return render_template('register.html', title = 'Register', form=form)
 
 @app.route('/login', methods=['GET','POST'])
