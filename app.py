@@ -102,5 +102,16 @@ def passwordreset():
         return redirect('login')
     return render_template('ResetPassword.html',title = 'Reset Password',form=form)
 
+
+@app.route('/link',methods=['GET','POST'])
+def link():
+    return render_template('link.html', title = 'Link')
+
+
+@app.route('/grades',methods=['GET','POST'])
+def grades():
+    return render_template('grades.html', title = 'Grades')
+
+
 if __name__ == '__main__':
     app.run(debug = True)
