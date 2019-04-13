@@ -2,7 +2,7 @@ from datetime import datetime
 import pyrebase
 from flask import Flask, render_template, url_for, flash, redirect
 
-from forms import RegistrationForm, LoginForm, Reset
+from forms import RegistrationForm, LoginForm, Reset, Grades
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '3009a067019ca7c004d7e5a0133431ac'
@@ -45,23 +45,26 @@ firebase = pyrebase.initialize_app(config)
 
 auth = firebase.auth()
 db = firebase.database()
-
-posts = [
-    {'author': "Koushik Deb",
-     'title' : "Blog Post 1",
-     'content': "First post content",
-     'date_posted': "April 20,2018"
-    },
-    {'author': "Mobin",
-     'title' : "Blog Post 2",
-     'content': "First post content",
-     'date_posted': "April 20,2018"
-    }
-]
+#
+# posts = [
+#     {'author': "Koushik Deb",
+#      'title' : "Blog Post 1",
+#      'content': "First post content",
+#      'date_posted': "April 20,2018"
+#     },
+#     {'author': "Mobin",
+#      'title' : "Blog Post 2",
+#      'content': "First post content",
+#      'date_posted': "April 20,2018"
+#     }
+# ]
 @app.route('/')
+def startpage():
+    return render_template('startpage.html')
+
 @app.route('/home')
 def home():
-    return render_template('home.html',posts=posts)
+    return render_template('home.html')
 
 @app.route('/about')
 def about():
@@ -110,10 +113,39 @@ def link():
 
 @app.route('/grades',methods=['GET','POST'])
 def grades():
-    return render_template('grades.html', title = 'Grades')
+    form = Grades()
+    if form.validate_on_submit():
+        du = 'No'
+        ju = []
+        bangla = form.bangla.data
+        english = form.english.data
+        math = form.math.data
+        physics = form.physics.data
+        chemistry = form.chemistry.data
+        biology = form.biology.data
+        ssc = form.ssc.data
+        hsc = form.hsc.data
+        total = ssc + hsc
+        if ssc >= 3.5 and hsc >= 3.5:
+            if total >= 8.0:
+                du = 'Yes'
+        if total >= 7.5:
+            ju.append('A')
+        if total >= 8.0:
+            ju.append('D')
+
+            if physics >= 4.75 and math >= 4.75:
+                ju.append('H')
+        if not ju:
+            ju.append('No')
+        return render_template('result.html', du=du, ju=ju)
+
+    return render_template('grades.html', title = 'Grades', form=form)
 
 @app.route('/index')
 def index():
     return render_template('index.html')
+
+
 if __name__ == '__main__':
     app.run(debug = True)

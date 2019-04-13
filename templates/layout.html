@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +11,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    {% block javascript %}
 
+    {% endblock %}
     <meta charset="UTF-8">
     {% if title %}
         <title>{{ title }}</title>
@@ -29,6 +34,10 @@
         <div class="navbar-nav mr-auto">
           <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
           <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+          <a class="nav-item nav-link" href="{{ url_for('link') }}">Notice</a>
+          <a class="nav-item nav-link" href="{{ url_for('grades') }}">Check Admission</a>
+          <a class="nav-item nav-link" href="{{ url_for('index') }}">Exam</a>
+
         </div>
         <!-- Navbar Right Side -->
         <div class="navbar-nav">
@@ -53,21 +62,11 @@
     {% endwith %}
       {% block content %}{% endblock %}
     </div>
-    <div class="col-md-4">
-      <div class="content-section">
-        <h3>Our Sidebar</h3>
-        <p class='text-muted'>You can put any information here you'd like.
-          <ul class="list-group">
-            <li class="list-group-item list-group-item-light">Latest Posts</li>
-            <li class="list-group-item list-group-item-light">Announcements</li>
-            <li class="list-group-item list-group-item-light">Calendars</li>
-            <li class="list-group-item list-group-item-light">etc</li>
-          </ul>
-        </p>
-      </div>
-    </div>
+
   </div>
+
 </main>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
