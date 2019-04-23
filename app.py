@@ -167,7 +167,7 @@ def index():
 
 @app.route('/logout')
 def logout():
-    auth.signOut()
+    auth.current_user = None
     return render_template('startpage.html')
 if __name__ == '__main__':
     app.run(debug = True)
