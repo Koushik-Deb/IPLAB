@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,8 +40,12 @@
         </div>
         <!-- Navbar Right Side -->
         <div class="navbar-nav">
-          <a class="nav-item nav-link" href="{{url_for('login')}}">Login</a>
-          <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+            {% if auth.current_user%}
+                <a class="nav-item nav-link" href="{{url_for('logout')}}">LogOut</a>
+            {% else %}
+                <a class="nav-item nav-link" href="{{url_for('login')}}">Login</a>
+                <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+            {% endif %}
         </div>
       </div>
     </div>

@@ -60,16 +60,16 @@ db = firebase.database()
 # ]
 @app.route('/')
 def startpage():
-    return render_template('startpage.html')
+    return render_template('startpage.html',auth=auth)
 
 @app.route('/home')
 def home():
-    if auth.current_user is None:
-        flash(f'You have to login first!!!','info')
-        print("whaaaaaaaa")
-        return redirect(url_for('login'))
-    else:
-        return redirect(url_for('home'))
+    # if auth.current_user is None:
+    #     flash(f'You have to login first!!!','info')
+    #     print("whaaaaaaaa")
+    #     return redirect(url_for('login'))
+    # else:
+    return render_template("home.html", auth=auth)
 @app.route('/about')
 def about():
     if auth.current_user is None:
@@ -77,7 +77,7 @@ def about():
         print("whaaaaaaaa")
         return redirect(url_for('login'))
     else:
-        return render_template('about.html', title = 'Damn')
+        return render_template('about.html', title = 'Damn',auth=auth)
 
 @app.route('/register',methods=['GET','POST'])
 def register():
@@ -89,7 +89,7 @@ def register():
         auth.create_user_with_email_and_password(email, password)
         #auth.get_account_info(['idToken'])
         return redirect(url_for('login'))
-    return render_template('register.html', title = 'Register', form=form)
+    return render_template('register.html', title = 'Register', form=form,auth=auth)
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -103,7 +103,7 @@ def login():
             return redirect(url_for('home'))
         except:
             flash(f'Log In unsuccessful!!','danger')
-    return render_template('login.html', title = 'Login', form=form)
+    return render_template('login.html', title = 'Login', form=form,auth=auth)
 
 @app.route('/passwordreset', methods=['GET','POST'])
 def passwordreset():
@@ -112,12 +112,12 @@ def passwordreset():
         email = form.email.data
         auth.send_password_reset_email(email)
         return redirect('login')
-    return render_template('ResetPassword.html',title = 'Reset Password',form=form)
+    return render_template('ResetPassword.html',title = 'Reset Password',form=form,auth=auth)
 
 
 @app.route('/link',methods=['GET','POST'])
 def link():
-    return render_template('link.html', title = 'Link')
+    return render_template('link.html', title = 'Link',auth=auth)
 
 
 @app.route('/grades',methods=['GET','POST'])
@@ -152,9 +152,9 @@ def grades():
                     ju.append('H')
             if not ju:
                 ju.append('No')
-            return render_template('result.html', du=du, ju=ju)
+            return render_template('result.html', du=du, ju=ju,auth=auth)
 
-    return render_template('grades.html', title = 'Grades', form=form)
+    return render_template('grades.html', title = 'Grades', form=form,auth=auth)
 
 @app.route('/index')
 def index():
@@ -163,8 +163,11 @@ def index():
         print("whaaaaaaaa")
         return redirect(url_for('login'))
     else:
-        return render_template('index.html')
+        return render_template('index.html',auth=auth)
 
-
+@app.route('/logout')
+def logout():
+    auth.signOut()
+    return render_template('startpage.html')
 if __name__ == '__main__':
     app.run(debug = True)

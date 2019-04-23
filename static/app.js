@@ -37,10 +37,26 @@ function showProgress() {
 };
 
 function showScores() {
-    var gameOverHTML = "<h1>Result</h1>";
+    var gameOverHTML = "<h1>Result "+quiz.score + "</h1>";
     gameOverHTML += "<h2 id='score'> Your scores: " + quiz.score + "</h2>";
+    if(quiz.score<=5) {
+        gameOverHTML += "<h3>Poor result, needs to improve</h3>";
+    }
+    else if (quiz.score<=10){
+        gameOverHTML += "<h3>You did good, you can do better!!</h3>";
+    }
+
+    else if (quiz.score<=15){
+        gameOverHTML += "<h3>Reaching new heights!!!</h3>";
+    }
+
+    else if (quiz.score<=20){
+        gameOverHTML += "<h3>Success is yours!!!</h3>";
+    }
+    var retake = "<h4>     Wanna retake the exam?? Click in the Exam button above or just REFRESH!</h4>"
     var element = document.getElementById("quiz");
-    element.innerHTML = gameOverHTML;
+    element.innerHTML = gameOverHTML + retake;
+    //element.innerHTML = retake;
 };
 
 // create questions
