@@ -64,11 +64,20 @@ def startpage():
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
-
+    if auth.current_user is None:
+        flash(f'You have to login first!!!','info')
+        print("whaaaaaaaa")
+        return redirect(url_for('login'))
+    else:
+        return redirect(url_for('home'))
 @app.route('/about')
 def about():
-    return render_template('about.html', title = 'Damn')
+    if auth.current_user is None:
+        flash(f'You have to login first!!!','info')
+        print("whaaaaaaaa")
+        return redirect(url_for('login'))
+    else:
+        return render_template('about.html', title = 'Damn')
 
 @app.route('/register',methods=['GET','POST'])
 def register():
@@ -113,38 +122,48 @@ def link():
 
 @app.route('/grades',methods=['GET','POST'])
 def grades():
-    form = Grades()
-    if form.validate_on_submit():
-        du = 'No'
-        ju = []
-        bangla = form.bangla.data
-        english = form.english.data
-        math = form.math.data
-        physics = form.physics.data
-        chemistry = form.chemistry.data
-        biology = form.biology.data
-        ssc = form.ssc.data
-        hsc = form.hsc.data
-        total = ssc + hsc
-        if ssc >= 3.5 and hsc >= 3.5:
+    if auth.current_user is None:
+        flash(f'You have to login first!!!', 'info')
+        print("whaaaaaaaa")
+        return redirect(url_for('login'))
+    else:
+        form = Grades()
+        if form.validate_on_submit():
+            du = 'No'
+            ju = []
+            bangla = form.bangla.data
+            english = form.english.data
+            math = form.math.data
+            physics = form.physics.data
+            chemistry = form.chemistry.data
+            biology = form.biology.data
+            ssc = form.ssc.data
+            hsc = form.hsc.data
+            total = ssc + hsc
+            if ssc >= 3.5 and hsc >= 3.5:
+                if total >= 8.0:
+                    du = 'Yes'
+            if total >= 7.5:
+                ju.append('A')
             if total >= 8.0:
-                du = 'Yes'
-        if total >= 7.5:
-            ju.append('A')
-        if total >= 8.0:
-            ju.append('D')
+                ju.append('D')
 
-            if physics >= 4.75 and math >= 4.75:
-                ju.append('H')
-        if not ju:
-            ju.append('No')
-        return render_template('result.html', du=du, ju=ju)
+                if physics >= 4.75 and math >= 4.75:
+                    ju.append('H')
+            if not ju:
+                ju.append('No')
+            return render_template('result.html', du=du, ju=ju)
 
     return render_template('grades.html', title = 'Grades', form=form)
 
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    if auth.current_user is None:
+        flash(f'You have to login first!!!','info')
+        print("whaaaaaaaa")
+        return redirect(url_for('login'))
+    else:
+        return render_template('index.html')
 
 
 if __name__ == '__main__':
