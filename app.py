@@ -72,11 +72,11 @@ def home():
     return render_template("home.html", auth=auth)
 @app.route('/about')
 def about():
-    if auth.current_user is None:
-        flash(f'You have to login first!!!','info')
-        print("whaaaaaaaa")
-        return redirect(url_for('login'))
-    else:
+    # if auth.current_user is None:
+    #     flash(f'You have to login first!!!','info')
+    #     print("whaaaaaaaa")
+    #     return redirect(url_for('login'))
+    # else:
         return render_template('about.html', title = 'Damn',auth=auth)
 
 @app.route('/register',methods=['GET','POST'])
