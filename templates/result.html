@@ -1,11 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>DU: {{ du }}</h1>
+    <div class="c">
+    <h1 style="color: whitesmoke">DU: {{ du }}</h1>
 
-    <h1>JU:
+    <h1 style="color: whitesmoke">JU:
     {% for unit in ju %}
         {{ unit }}
     {% endfor %}
     </h1>
+    </div>
 {% endblock %}
 
