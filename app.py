@@ -169,5 +169,7 @@ def index():
 def logout():
     auth.current_user = None
     return render_template('startpage.html', auth=auth)
+
+
 if __name__ == '__main__':
     app.run(debug = True)

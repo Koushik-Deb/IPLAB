@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+
 {% block content %}
 {% for post in posts %}
     <article class="media content-section">
@@ -10,4 +11,24 @@
 
 
 {% endfor %}
+
+    <p align="center">
+        <p align="center">
+        <button type="button" class="btn btn-primary btn-lg btn-block" style="width: 300px; height: 120px;"><a href="{{ url_for('grades') }}" style="color: darkred"> Check Admission</a></button>
+        </p>
+        <p align="center">
+        <button type="button" class="btn btn-primary btn-lg btn-block" style="width: 300px; height: 120px;"><a href="{{ url_for('link') }}" style="color: darkred"> Notice </a></button>
+        </p>
+
+
+        <p align="center">
+        <button type="button" class="btn btn-primary btn-lg btn-block" style="width: 300px; height: 120px;"><a href="{{ url_for('index') }}" style="color: darkred"> Exam</a></button>
+        </p>
+        <p align="center">
+        <button type="button" class="btn btn-primary btn-lg btn-block" style="width: 300px; height: 120px;"><a href="{{ url_for('about') }}" style="color: darkred"> About</a></button>
+        </p>
+        <p align="center">
+        <button type="button" class="btn btn-secondary btn-lg btn-block" style="width: 300px; height: 120px;"><a href="{{ url_for('logout') }}" style="color: darkred"> Logout</a></button>
+        </p>
+    </p>
 {% endblock content %}

@@ -1,9 +1,11 @@
 body {
-  background: #fa5e50;
-  color: #ffffff;
+  background-image: url("img/admission.png");
   margin-top: 5rem;
 }
 
+.c {
+  padding-left: 400px;
+}
 
 h1, h2, h3, h4, h5, h6 {
   color: #6e302b;
